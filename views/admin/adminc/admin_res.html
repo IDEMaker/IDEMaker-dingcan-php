@@ -1,0 +1,24 @@
+<div id="show">
+    <table  class="table  table-hover">
+        <thead>
+        <tr>
+            <th width="25%">管理员名称</th>
+            <th width="30%">管理员邮箱</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $data as $key=>$val}
+        <tr align="center">
+
+            <td>{$val.username}</td>
+            <td>{$val.email}</td>
+            <td align="center"><a class="btn btn-link" onclick="editAdmin({$val.id})">修改</a><a class="btn btn-link" onclick="delAdmin({$val.id})">删除</a></td>
+        </tr>
+        {/foreach}
+
+        </tbody>
+    </table>
+    {$page}
+    <p align="center">共{$count}条数据</p>
+</div>

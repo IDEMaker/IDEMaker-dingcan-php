@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+
+    <link rel="stylesheet" href="{CSS}admin/reset.css">
+    <link rel="stylesheet" href="{CSS}admin/bootstrap-admin.css">
+    <link rel="stylesheet" href="{CSS}admin/backstage.css">
+    <link rel="stylesheet" href="{CSS}public/page.css">
+    <script src="{JS}public/jquery-1.8.3.min.js"></script>
+    <script>pageurl="?m=admin&c=Shopc&a=shop_list";</script>
+    <script src="{JS}public/page.js"></script>
+</head>
+<body>
+<div class="details">
+    <div class="details_operation clearfix">
+        <div class="bui_select">
+            <input type="button" value="添加店铺" class="btn btn-primary"  onclick="addShop()">
+        </div>
+
+    </div>
+    {include file="{APP_PPDP}/admin/search.html"}
+    <!--表格-->
+    <div id="show">
+    <table class="table table-hover" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th align="center" width="15%">店铺名称</th>
+            <th align="center" width="15%">店铺ID</th>
+            <th align="center" width="15%">店铺账户</th>
+            <th align="center" width="15%">店铺状态</th>
+            <th align="center" width="15%">店铺审核</th>
+            <th align="center" >店铺icon</th>
+            <th align="center" width="40">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {if $data neq ""}
+        {foreach $data as $key=>$val}
+        <tr>
+            <!--这里的id和for里面的c1 需要循环出来-->
+
+            <td align="center">{$val.shopName}</td>
+            <td align="center">{$val.shopId}</td>
+            <td align="center">{$val.adminName}</td>
+            {if $val.shopState eq '1'}
+            <td align="center">运营</td>
+            {else}
+            <td align="center">休息</td>
+            {/if}
+            {if $val.isAudit eq '1'}
+            <td align="center">已审核</td>
+            {else}
+            <td align="center">未审核</td>
+            {/if}
+            <td align="center">
+                <img src="{APP_UPLOAD}{$val.shopIconOgl}" width=50 height=50/>
+            </td>
+            <td align="center"><a class="btn btn-link" onclick="editShop({$val.shopId})">修改</a><a class="btn btn-link"  onclick="delShop({$val.shopId})">删除</a></td>
+        </tr>
+        {/foreach}
+
+        </tbody>
+    </table>
+        {$page}
+        <p align="center">共{$count}条数据</p>
+        {/if}
+</div>
+</div>
+<script type="text/javascript">
+    function editShop(shopId){
+        window.location="?m=admin&c=Shopc&a=shop_edit&shopId="+shopId;
+    }
+    function delShop(shopId){
+        if(window.confirm("您确定要删除吗？删除之后不能恢复哦！！！")){
+            window.location="?m=admin&c=Shopc&a=shop_delete&shopId="+shopId;
+        }
+    }
+    function addShop(){
+        window.location="?m=admin&c=Shopc&a=index";
+    }
+</script>
+</body>
+</html>

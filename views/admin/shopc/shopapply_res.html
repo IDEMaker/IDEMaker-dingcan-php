@@ -1,0 +1,35 @@
+<div id="show">
+    <table  class="table  table-hover" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th width="10%">申请人</th>
+            <th width="10%">联系电话</th>
+            <th width="10%">申请状态</th>
+            <th width="10%">申请时间</th>
+            <th width="10%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {if $data neq 0}
+        {foreach $data as $key=>$val}
+        <tr align="center">
+            <td style="font-size: 20px;">{$val.username}</td>
+            <td style="font-size: 20px;">{$val.hotelPhone}</td>
+            {if $val.readStatus eq 0}
+            <td>待阅读</td>
+            {/if}
+            <td>{$val.time}</td>
+            <td align="center"><a class="btn btn-link" onclick="editt({$val.id})">审核</a><a class="btn btn-link"  onclick="look({$val.id})">查看</a></td>
+        </tr>
+        {/foreach}
+
+        </tbody>
+    </table>
+    <p align="center">
+        {$page}
+    </p>
+    <p align="center">
+        共{$count}条数据
+    </p>
+    {/if}
+</div>

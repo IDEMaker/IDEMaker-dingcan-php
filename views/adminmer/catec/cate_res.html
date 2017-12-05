@@ -1,0 +1,28 @@
+<div id="show">
+    <table class="table table-hover" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th align="center"  width="20%">分类</th>
+            <th align="center"  width="20%">所属商户</th>
+            <th align="center" width="30%">权重</th>
+            <th align="center" >操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {if $data neq ""}
+        {foreach $data as $key=>$val}
+        <tr>
+
+            <td align="center">{$val.cName}</td>
+            <td align="center">{$val.adminName}</td>
+            <td align="center">{$val.weight}</td>
+            <td align="center"><a class="btn btn-link" onclick="editCate({$val.id})">修改</a><a class="btn btn-link"  onclick="delCate({$val.id})">删除</a></td>
+        </tr>
+        {/foreach}
+
+        </tbody>
+    </table>
+    {$page}
+    <p align="center">共{$count}条数据</p>
+    {/if}
+</div>

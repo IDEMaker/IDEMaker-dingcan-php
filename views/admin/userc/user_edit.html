@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>用户编辑</title>
+
+    <link rel=stylesheet href="{CSS}admin/reset.css">
+    <link rel="stylesheet" href="{CSS}admin/bootstrap-admin.css">
+    <link href="{CSS}admin/global.css"  rel="stylesheet"  type="text/css"/>
+    <link href="{CSS}admin/backstage.css"  rel="stylesheet"  type="text/css"/>
+</head>
+<body>
+<span class="main-title">用户编辑</span>
+<div id="main-tip"></div>
+<div class="form-add">
+    <form id="form1" action="{$form}" method="post" enctype="multipart/form-data">
+        <table class="table  table-bordered table-hover">
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">用户账户</span></td>
+                <td><input type="text" width="100%" id="" name="username"  value="{$data.username}" disabled placeholder="不显示则为空"/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">用户姓名</span></td>
+                <td><input type="text" width="100%" id="" name="name"  value="{$data.name}" disabled placeholder="不显示则为空"/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">用户邮箱</span></td>
+                <td><input type="text" width="100%" id="" name="email"  value="{$data.email}" disabled placeholder="不显示则为空"/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">用户余额</span></td>
+                <td><input type="text" width="100%" id="" name="balance"  value="{$data.balance}元" disabled/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">充值/扣款</span></td>
+                <td>
+                    <div class="form-td">
+                    <input type="radio" name="isBlack"  value="1" ><span class="td-txt">是</span>
+                    <input type="radio" name="isBlack"  value="0" checked ><span class="td-txt">否</span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="visibility:hidden;" id="isBlack">
+                <td></td>
+                <td><input type="text" width="100%" id="" name="balance"  placeholder="请输入金额"/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">用户积分</span></td>
+                <td><input type="text" width="100%" id="" name="jifen"  value="{$data.jifen}个" disabled/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">增加/扣除</span></td>
+                <td>
+                    <div class="form-td">
+                        <input type="radio" name="isScore"  value="1" ><span class="td-txt">是</span>
+                        <input type="radio" name="isScore"  value="0" checked ><span class="td-txt">否</span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="visibility:hidden;" id="isScore">
+                <td></td>
+                <td><input type="text" width="100%" id="" name="jifen"  placeholder="请输入个数"/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">用户密码</span></td>
+                <td>
+                    <div class="form-td">
+                        <input type="radio" name="isPwd"  value="1" ><span class="td-txt">是</span>
+                        <input type="radio" name="isPwd"  value="0" checked ><span class="td-txt">否</span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="visibility:hidden;" id="isPwd">
+                <td></td>
+                <td><input type="text" width="100%" id="" name="password"  placeholder="请输入密码，注意密码需单独修改，反之则失败"/></td>
+            </tr>
+            <input type="hidden" value="{$data.id}" name="id">
+        </table>
+        <input class="btn btn-primary" type="submit" value="提交"/>
+    </form>
+</div>
+
+<script type="text/javascript" src="{JS}admin/jquery-1.8.3.js"></script>
+<script src="{JS}admin/city.js"></script>
+<script src="{JS}admin/edit.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#form1").submit(function () {
+            if(isValid()){
+                return true;
+            }else{
+                return false;
+            }
+        });
+        $("input[name='isBlack']").click(function(){
+            var isBlack=$("input[name='isBlack']:checked").val();
+
+            if(isBlack==1)
+            {
+                $("#isBlack").css("visibility","visible");
+            }else if(isBlack==0)
+            {
+                $("#isBlack").css("visibility","hidden");
+            }
+        })
+        $("input[name='balance']").change(function(){
+
+            var moe=$(this).val();
+            var num=Math.round(moe*100)/100;
+            if(!num==0)
+            {
+                $(this).val(num);
+            }
+
+        })
+        $("input[name='jifen']").change(function(){
+
+            var moe=$(this).val();
+            var num=parseInt(moe);
+            if(!num==0)
+            {
+                $(this).val(num);
+            }
+
+        })
+        $("input[name='isScore']").click(function(){
+            var isScore=$("input[name='isScore']:checked").val();
+
+            if(isScore==1)
+            {
+                $("#isScore").css("visibility","visible");
+            }else if(isScore==0)
+            {
+                $("#isScore").css("visibility","hidden");
+            }
+        })
+        $("input[name='isPwd']").click(function(){
+            var isPwd=$("input[name='isPwd']:checked").val();
+
+            if(isPwd==1)
+            {
+                $("#isPwd").css("visibility","visible");
+            }else if(isPwd==0)
+            {
+                $("#isPwd").css("visibility","hidden");
+            }
+        })
+    });
+    function isValid(){
+
+        $("#main-tip").hide();
+        return true;
+    }
+</script>
+</body>
+</html>

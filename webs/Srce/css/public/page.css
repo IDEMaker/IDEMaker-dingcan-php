@@ -1,0 +1,18 @@
+ul li{
+
+    margin-left: 10px;
+    list-style: none;
+}
+ul li a{
+    width:17px;
+    height:20px;
+    font:12px/20px "宋体";
+    border:1px solid #CCC;
+    display:inline-block;
+    text-align:center;
+    text-decoration:none;
+    margin-left: 10px;
+}
+ul li a:hover,.active{ background-color:#1f3a87;
+    color:#FFF;}
+.ww{ width:64px;}

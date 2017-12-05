@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>入驻申请</title>
+
+    <link rel=stylesheet href="{CSS}admin/reset.css">
+    <link rel="stylesheet" href="{CSS}admin/bootstrap-admin.css">
+    <link href="{CSS}admin/global.css"  rel="stylesheet"  type="text/css"/>
+    <link href="{CSS}admin/backstage.css"  rel="stylesheet"  type="text/css"/>
+</head>
+<body>
+<span class="main-title">申请详情</span>
+<div id="main-tip"></div>
+<div class="form-add">
+
+        <table class="table  table-bordered table-hover">
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">申请人</span></td>
+                <td><input type="text" width="100%"   value="{$data.username}" disabled/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">店铺名称</span></td>
+                <td><input type="text" width="100%" value="{$data.hotelName} " disabled/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">联系电话</span></td>
+                <td><input type="text" width="100%" value="{$data.hotelPhone} " disabled/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">店铺位置</span></td>
+                <td><input type="text" width="100%" value="{$data.hotelLocation} " disabled/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">店铺介绍</span></td>
+                <td>
+                    <textarea name="" id="" cols="60" rows="6" disabled style="font-size: 16px;">{$data.hotelIntroduction}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">申请时间</span></td>
+                <td><input type="text" width="100%" value="{$data.time} " disabled/></td>
+            </tr>
+        </table>
+
+</div>
+
+<script type="text/javascript" src="{JS}admin/jquery-1.8.3.js"></script>
+<script src="{JS}admin/city.js"></script>
+<script src="{JS}admin/edit.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $("#form1").submit(function () {
+            if(isValid()){
+                return true;
+            }else{
+                return false;
+            }
+        });
+    });
+    function isValid(){
+        if($("input[name='shopName']").val().length<=0){
+            $("#main-tip").html('名称不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if($("input[name='shopTip']").val().length<=0){
+            $("#main-tip").html('公告不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        var isShopPass=$("input[name='isShopPass']:checked").val();
+
+        if(isShopPass==1&&$("input[name='password']").val()=="")
+        {
+
+            $("#main-tip").html('密码不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if($("#province option:selected").val()=="请选择")
+        {
+            $("#main-tip").html('城市不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+
+        var isShopIcon=$("input[name='isShopIcon']:checked").val();
+
+        if(isShopIcon==1)
+        {
+            if($("input[name='myFile[]']").val().length<=0){
+                $("#main-tip").html('图片不能为空');
+                $("#main-tip").css('display', 'inline-block');
+                return false;
+            }
+        }
+        $("#main-tip").hide();
+        return true;
+    }
+</script>
+</body>
+</html>

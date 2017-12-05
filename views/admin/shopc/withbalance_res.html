@@ -1,0 +1,44 @@
+<div id="show">
+    <table  class="table  table-hover" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th width="10%">提现账户</th>
+            <th width="10%">提现商户</th>
+            <th width="10%">店铺ID</th>
+            <th width="10%">提现金额</th>
+            <th width="10%">提现后余额</th>
+            <th width="10%">提现状态</th>
+            <th width="10%">提现时间</th>
+            <th width="10%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {if $data neq 0}
+        {foreach $data as $key=>$val}
+        <tr align="center">
+            <td style="font-size: 20px;">{$val.withAccount}</td>
+            <td style="font-size: 20px;">{$val.adminName}</td>
+            <td style="font-size: 20px;">{$val.shopId}</td>
+            <td> <b><font color="red" style="font-size: 20px;">{$val.balance}</font></b></td>
+            <td><b><font color="red" style="font-size: 20px;">{$val.withBalance}</font></b></td>
+            {if $val.status eq 1}
+            <td>已审核</td>
+            {else}
+            <td>待审核</td>
+            {/if}
+            <td>{$val.createTime}</td>
+            <td><a href="javascript:;" onclick="yesco({$val.id},{$val.balance})">审核</a></td>
+        </tr>
+        {/foreach}
+
+        </tbody>
+
+    </table>
+    <p align="center">
+        {$page}
+    </p>
+    <p align="center">
+        共{$count}条数据
+    </p>
+    {/if}
+</div>

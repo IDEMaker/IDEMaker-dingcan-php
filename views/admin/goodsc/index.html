@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>-.-</title>
+
+    <link rel=stylesheet href="{CSS}admin/reset.css">
+    <link rel=stylesheet href="{CSS}admin/bootstrap-admin.css">
+    <link rel=stylesheet href="{CSS}admin/global.css"    />
+    <link rel=stylesheet href="{CSS}admin/backstage.css"   />
+    <link rel=stylesheet href="{CSS}admin/fileinput.min.css">
+
+</head>
+<body>
+<span class="main-title">添加商品</span>
+<span id="main-tip">用户名为空</span>
+<div class="form-add">
+    <form action="{$form}" id="form1" method="post" enctype="multipart/form-data">
+        <table  class="table  table-bordered table-hover">
+            <tr>
+                <td align="right" width="15%"><span class="td-txt">商品名称</span></td>
+                <td ><input   width="100px" type="text" name="pName"  placeholder="请输入商品名称"/></td>
+            </tr>
+            <tr>
+                <td align="right"><span class="td-txt">所属店铺</span></td>
+                <td>
+                    <select id="shop" name="shopId" class="">
+                        <option value="请选择" selected='selected'>请选择</option>
+                        {if $user neq ""}
+                        {foreach $user as $key=>$val}
+                        <option value="{$val.shopId}">{$val.adminName}</option>
+                        {/foreach}
+                         {/if}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="right"><span class="td-txt">商品分类</span></td>
+                <td>
+                    <select id="cate" name="pCateId" class="">
+                        <option value="请选择" selected='selected'>请选择</option>
+                        {if $cate neq 0}
+                        {foreach $cate as $key=>$val}
+                        <option value="{$val.id}">{$val.cName}-{$val.adminName}</option>
+                        {/foreach}
+                        {/if}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="right"><span class="td-txt">是否热销</span></td>
+                <td>
+                    <div class="form-td">
+                        <input type="radio" name="isHot" value="1" ><span class="td-txt">是</span>
+                        <input type="radio" name="isHot"  checked value="0" ><span class="td-txt">否</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td align="right"><span class="td-txt">商品价格</span></td>
+                <td><input class="" type="text" name="priceB"  placeholder="单位（元）"/></td>
+            </tr>
+            <tr>
+                <td align="right"><span class="td-txt">商品库存</span></td>
+
+                <td >
+                    <input   width="100px" type="text" name="pNum"  placeholder="库存 1-999（件） 0不限制"/>
+                </td>
+
+            </tr>
+            <tr>
+                <td align="right"><span class="td-txt">商品图像</span></td>
+                <td>
+                    <input class="btn btn-file" type="file" name="myFile[]"/>
+                </td>
+            </tr>
+        </table>
+        <input class="btn btn-primary"  type="submit"  value="发布商品"/>
+    </form>
+</div>
+
+<script src="{JS}admin/jquery-1.8.3.js"></script>
+<script src="{JS}admin/fileinput.min.js"></script>
+<script src="{JS}admin/city.js"></script>
+<script src="{JS}admin/edit.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#form1").submit(function () {
+            if(isValid()){
+                return true;
+            }else{
+                return false;
+            }
+        });
+    });
+
+
+
+    function isValid(){
+        if($("input[name='pName']").val().length<=0){
+            $("#main-tip").html('商品名称不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if($("#shop option:selected").val()=="请选择")
+        {
+            $("#main-tip").html('店铺不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if($("#cate option:selected").val()=="请选择")
+        {
+            $("#main-tip").html('分类不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if($("input[name='priceB']").val().length<=0){
+            $("#main-tip").html('价格不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if($("input[name='pNum']").val().length<=0){
+            $("#main-tip").html('库存不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if($("input[name='myFile[]']").val().length<=0){
+            $("#main-tip").html('图片不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        $("#main-tip").hide();
+        return true;
+    }
+</script>
+</body>
+</html>

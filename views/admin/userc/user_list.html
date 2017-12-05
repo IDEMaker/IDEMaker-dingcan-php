@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>-.-</title>
+    <link rel="stylesheet" href="{CSS}admin/reset.css">
+    <link rel="stylesheet" href="{CSS}admin/bootstrap-admin.css">
+    <link rel="stylesheet" href="{CSS}admin/backstage.css">
+    <link rel="stylesheet" href="{CSS}public/page.css">
+    <script src="{JS}public/jquery-1.8.3.min.js"></script>
+    <script>pageurl="?m=admin&c=Userc&a=user_list";</script>
+    <script src="{JS}public/page.js"></script>
+</head>
+<body>
+
+<span class="main-title">用户列表</span>
+<div class="details">
+    <div class="details_operation clearfix">
+        <div class="bui_select">
+        </div>
+    </div>
+    <!--表格-->
+    {include file="{APP_PPDP}/admin/search.html"}
+    <div id="show">
+    <table class="table  table-hover">
+        <thead>
+        <tr>
+            <th width="20%">用户名称</th>
+            <th width="20%">手机</th>
+            <th width="30%">注册时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {if $data neq 0}
+       {foreach $data as $key=>$val}
+        <tr align="center">
+            <td>{$val.username}</td>
+            <td>{$val.phone}</td>
+            <td>{$val.regtime}</td>
+            <td align="center"><a class="btn btn-link" onclick="editUser({$val.id})">编辑</a><a class="btn btn-link"  onclick="delUser({$val.username})">删除</a></td>
+        </tr>
+         {/foreach}
+        </tbody>
+    </table>
+        <p align="center">
+            {$page}
+        </p>
+        <p align="center">
+            共{$count}条数据
+        </p>
+        {/if}
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+
+    function addUser(){
+        window.location="addUser.php";
+    }
+    function limitUser(id){
+
+    }
+    function editUser(id){
+        window.location="?m=admin&c=Userc&a=user_edit&id="+id;
+    }
+    function delUser(username){
+        if(window.confirm("确认删除？")){
+            window.location="?m=admin&c=Userc&a=user_delete&username="+username;
+        }
+    }
+
+</script>
+</html>

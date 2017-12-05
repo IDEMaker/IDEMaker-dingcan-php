@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel=stylesheet href="{CSS}adminmer/reset.css">
+    <link rel=stylesheet href="{CSS}adminmer/bootstrap-admin.css">
+    <link rel="stylesheet" href="{CSS}adminmer/backstage.css">
+    <link rel="stylesheet" href="{CSS}public/page.css">
+    <script src="{JS}public/jquery-1.8.3.min.js"></script>
+    <script>pageurl="?m=adminmer&c=Accountc&a=mywithBalance";</script>
+    <script src="{JS}public/page.js"></script>
+</head>
+<body>
+<span class="main-title">我的提现记录</span>
+<div class="details_operation clearfix">
+
+    <div class="fl">
+    </div>
+
+    <div class="fr">
+        <div class="text">
+
+                <span>
+                                <input type="text" value="" placeholder="搜索关键字如:2017年" class="search form-control" name="search">
+                                </span>
+            <span>
+                    <input type="button" value="搜索" id="search" class="btn btn-primary">
+                </span>
+        </div>
+    </div>
+</div>
+
+<div id="show">
+<table  class="table  table-hover" cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+        <th width="10%">提现账户</th>
+        <th width="10%">提现金额</th>
+        <th width="10%">提现后余额</th>
+        <th width="10%">提现状态</th>
+        <th width="10%">提现时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    {if $data neq 0}
+    {foreach $data as $key=>$val}
+    <tr align="center">
+        <td style="font-size: 20px;">{$val.withAccount}</td>
+        <td> <b><font color="red" style="font-size: 20px;">{$val.balance}</font></b></td>
+        <td><b><font color="red" style="font-size: 20px;">{$val.withBalance}</font></b></td>
+        {if $val.status eq 1}
+        <td>已审核</td>
+        {else}
+        <td>待审核</td>
+        {/if}
+
+        <td>{$val.createTime}</td>
+    </tr>
+    {/foreach}
+
+    </tbody>
+</table>
+    <p align="center">
+        {$page}
+    </p>
+    <p align="center">
+        共{$count}条数据
+    </p>
+
+    <p align="center">
+        当前页面总提现额为<b><font color="red">{$balance}</font></b>元
+    </p>
+    {/if}
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<div id="show">
+    <table class="table table-hover" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th align="center" width="15%">店铺名称</th>
+            <th align="center" width="15%">店铺ID</th>
+            <th align="center" width="15%">店铺账户</th>
+            <th align="center" width="15%">店铺状态</th>
+            <th align="center" width="15%">店铺审核</th>
+            <th align="center" >店铺icon</th>
+            <th align="center" width="40">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {if $data neq ""}
+        {foreach $data as $key=>$val}
+        <tr>
+            <!--这里的id和for里面的c1 需要循环出来-->
+
+            <td align="center">{$val.shopName}</td>
+            <td align="center">{$val.shopId}</td>
+            <td align="center">{$val.adminName}</td>
+            {if $val.shopState eq '1'}
+            <td align="center">运营</td>
+            {else}
+            <td align="center">休息</td>
+            {/if}
+            {if $val.isAudit eq '1'}
+            <td align="center">已审核</td>
+            {else}
+            <td align="center">未审核</td>
+            {/if}
+            <td align="center">
+                <img src="{APP_UPLOAD}{$val.shopIconOgl}" width=50 height=50/>
+            </td>
+            <td align="center"><a class="btn btn-link" onclick="editShop({$val.shopId})">修改</a><a class="btn btn-link"  onclick="delShop({$val.shopId})">删除</a></td>
+        </tr>
+        {/foreach}
+
+        </tbody>
+    </table>
+    {$page}
+    <p align="center">共{$count}条数据</p>
+    {/if}
+</div>

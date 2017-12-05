@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+
+    <link rel=stylesheet href="{CSS}admin/reset.css">
+    <link rel="stylesheet" href="{CSS}admin/bootstrap-admin.css">
+    <link href="{CSS}admin/global.css"  rel="stylesheet"  type="text/css"/>
+    <link href="{CSS}admin/backstage.css"  rel="stylesheet"  type="text/css"/>
+</head>
+<body>
+<form id="form1" action="{$form}" method="post">
+    <span class="main-title">缓存清除请选择清除对象</span>
+    <div class="form-add">
+
+        <table class="table  table-bordered table-hover">
+            <div id="main-tip"></div>
+            <table style="text-align: center">
+                <tr>
+                    <td style="padding: 10px;">编译文件</td>
+                    <td>缓存文件</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px;"><input type="radio" value="1" name="isClear" checked></td>
+
+                    <td><input type="radio" value="0" name="isClear"></td>
+                </tr>
+        </table>
+    </div>
+    <input class="btn btn-primary" type="submit" value="清除"/>
+</form>
+<script type="text/javascript" src="{JS}admin/jquery-1.8.3.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#form1").submit(function () {
+            if(isValid()){
+                return true;
+            }else{
+                return false;
+            }
+        });
+        $("input[name='isLogoIcon']").click(function(){
+            var isLogoIcon=$("input[name='isLogoIcon']:checked").val();
+
+            if(isLogoIcon==1)
+            {
+                $("#isIcon").css("visibility","visible");
+            }else if(isLogoIcon==0)
+            {
+                $("#isIcon").css("visibility","hidden");
+            }
+        })
+    });
+    function isValid(){
+        if($("input[name='cName']").val().length<=0){
+            $("#main-tip").html('分类不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if($("input[name='weight']").val().length<=0){
+            $("#main-tip").html('权重不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if($("select option:selected").val()=="请选择商户")
+        {
+            $("#main-tip").html('商户不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if(isNaN($("input[name='weight']").val())){
+            $("#main-tip").html('权重必须为数字');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        $("#main-tip").hide();
+        return true;
+    }
+</script>
+</body>
+</html>

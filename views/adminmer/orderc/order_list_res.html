@@ -1,0 +1,78 @@
+<div id="show">
+
+    <!--表格-->
+    <table class="table  table-hover">
+        <thead>
+        <tr>
+            <th width="10%">订单编号</th>
+            <th width="20%">名称</th>
+            <th width="5%">价格</th>
+            <th width="5%">是否支付</th>
+            <th width="5%">支付方式</th>
+            <th width="5%">订单状态</th>
+            <th width="10%">订单时间</th>
+            <th width="10%">下单人/手机</th>
+            <th width="10%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {if $rows neq 0}
+        {foreach $rows as $val}
+        <tr align="center">
+            <!--这里的id和for里面的c1 需要循环出来-->
+            <td>{$val.orderId}</td>
+            <td>
+                {foreach $val['items'] as $v}
+                {$v.name}<br>
+                {/foreach}
+            </td>
+            <td>{$val.price}元</td>
+            <td>
+                {if $val.pay eq 1}
+                是
+                {else}
+                否
+                {/if}
+            </td>
+            <td>
+                {if $val.paymethod eq 0}
+                微信
+                {elseif $val.paymethod eq 1}
+                支付宝
+                {elseif $val.paymethod eq 2}
+                货到付款
+                {elseif $val.paymethod eq 3}
+                余额
+                {/if}
+            </td>
+            <td>
+                {if $val.received eq 1 || $val.received eq 3}
+                已接
+                {else}
+                未接
+                {/if}
+            </td>
+            <td>
+                {date("Y-m-d H:i:s",$val['orderTime'])}
+            </td>
+            <td>
+                {$val.orderName}/{$val.orderPhone}
+            </td>
+            <td align="center">
+                <a class="btn btn-link"  onclick="printOrder({$val.id})">打印</a>
+            </td>
+        </tr>
+        {/foreach}
+        </tbody>
+    </table>
+    <p align="center">
+        {$page}
+    </p>
+    <p align="center">
+        共{$count}条数据
+    </p>
+    <p align="center">
+        当前页面支付成功总余额为<b><font color="red">{$price}</font></b>元
+    </p>
+    {/if}
+</div>

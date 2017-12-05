@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="{JS}home/jquery-1.8.3.js"></script>
+    <script src="{JS}home/jquery.reveal.js"></script>
+    <script src="{JS}home/jquery.cookie.js"></script>
+    <script src="{JS}home/common.js"></script>
+    <link rel=stylesheet href="{CSS}home/reveal.css">
+    <title>{include file="{APP_PPDP}/home/title.html"}-订饭组-支付页</title>
+</head>
+<body>
+<!--提示框-->
+<div id="alertModel" class="alertModel" >
+    <a id="alert" data-reveal-id="alertModel" data-animation="fade"></a>
+    <span id="alert-msg"></span>
+    <a id="btn-ok" class="btn">知道了</a>
+    <a id="btn-close" class="close-reveal-modal"><img src="{IMAGE}home/icon_close.png" height="24" width="24"></a>
+</div>
+<script src="{JS}home/md5.js"></script>
+<script src="{JS}home/login.js"></script>
+<script src="{JS}home/cart.lib.js"></script>
+<script src="{JS}home/myInfo.js"></script>
+<script src="{JS}home/shopInfo.js"></script>
+<script src="{JS}home/order.js"></script>
+<script type="text/javascript">
+    $(function(){
+        commitOrder();
+
+    });
+</script>
+</body>
+</html>

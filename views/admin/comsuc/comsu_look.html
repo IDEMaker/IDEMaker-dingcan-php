@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>-.-</title>
+    <link rel="stylesheet" href="{CSS}admin/reset.css">
+    <link rel="stylesheet" href="{CSS}admin/bootstrap-admin.css">
+    <link rel="stylesheet" href="{CSS}admin/backstage.css">
+    <link rel="stylesheet" href="{CSS}public/page.css">
+    <script src="{JS}public/jquery-1.8.3.min.js"></script>
+    <script>pageurl="?m=admin&c=Comsuc&a=comSu";</script>
+    <script src="{JS}public/page.js"></script>
+</head>
+<body>
+
+<span class="main-title">用户投诉建议列表</span>
+<div class="details">
+    <!--表格-->
+    <div style="width:804px; float: left">
+    <div style="width:800px;height:50px;text-align:center;line-height:50px;background-color:#eee;border-radius: 50px;">
+        当前用户-{$user}总投诉建议记录
+    </div>
+    {foreach $data as $key=>$val}
+    <div style="width:400px;height:200px;text-align:left;padding-left:50px;padding-right:50px;padding-top:10px;margin-top:1px;line-height:30px;background-color:#eee;border-radius: 30px;float: left">
+        <span style="float: left">时间:{$val.time}&nbsp;&nbsp;</span><br>
+        <span style="float: left">投诉/建议:{$val.advice}</span>
+    </div>
+    {/foreach}
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+
+    function edit(username){
+        window.location="?m=admin&c=Comsuc&a=comSu_look&username="+username;
+    }
+
+
+</script>
+</html>

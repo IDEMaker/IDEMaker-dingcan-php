@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+
+    <link rel=stylesheet href="{CSS}adminmer/reset.css">
+    <link rel="stylesheet" href="{CSS}adminmer/bootstrap-admin.css">
+    <link href="{CSS}adminmer/global.css"  rel="stylesheet"  type="text/css"/>
+    <link href="{CSS}adminmer/backstage.css"  rel="stylesheet"  type="text/css"/>
+</head>
+<body>
+<span class="main-title">分类修改</span>
+<div id="main-tip"></div>
+<div class="form-add">
+    <form id="form1" action="{$form}" method="post">
+        <table class="table  table-bordered table-hover">
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">分类名称</span></td>
+                <td><input type="text" width="100%" id="cname" name="cName" placeholder="请输入分类名称" value="{$data.cName}"/></td>
+            </tr>
+            <tr>
+                <td align="right"><span class="td-txt">权重</span></td>
+                <td><input type="text" name="weight" placeholder="权重数字，越大越靠前" value="{$data.weight}"/></td>
+            </tr>
+        </table>
+        <input class="btn btn-primary" type="submit" value="提交"/>
+        <input type="hidden" name="id" value="{$data.id}">
+    </form>
+</div>
+
+<script type="text/javascript" src="{JS}adminmer/jquery-1.8.3.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#form1").submit(function () {
+            if(isValid()){
+                return true;
+            }else{
+                return false;
+            }
+        });
+    });
+    function isValid(){
+        if($("input[name='cName']").val().length<=0){
+            $("#main-tip").html('分类不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if($("input[name='weight']").val().length<=0){
+            $("#main-tip").html('权重不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if(isNaN($("input[name='weight']").val())){
+            $("#main-tip").html('权重必须为数字');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        $("#main-tip").hide();
+        return true;
+    }
+</script>
+</body>
+</html>

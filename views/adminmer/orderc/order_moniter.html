@@ -1,0 +1,338 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>-.-</title>
+    <link rel="stylesheet" href="{CSS}adminmer/reset.css">
+    <link rel="stylesheet" href="{CSS}adminmer/bootstrap-admin.css">
+    <link rel="stylesheet" href="{CSS}adminmer/backstage.css">
+    <link rel=stylesheet   href="{CSS}adminmer/order.css">
+    <link rel=stylesheet   href="{CSS}public/page.css">
+    <script src="{JS}home/jquery-1.8.3.js"></script>
+    <script>pageurl="?m=adminmer&c=Orderc&a=order_moniter";</script>
+    <script src="{JS}public/page.js"></script>
+</head>
+
+<body>
+
+<span class="main-title">开始接单</span>
+<div class="details_operation clearfix">
+
+    <div class="fl">
+    </div>
+
+    <div class="fr">
+        <div class="text">
+
+                <span>
+                                <input type="text" value="" placeholder="搜索订单号" class="search form-control" name="search">
+                                </span>
+            <span>
+                    <input type="button" value="搜索" id="search" class="btn btn-primary">
+                </span>
+        </div>
+    </div>
+</div>
+<div class="content-right fl">
+    <div class="details_operation clearfix">
+
+        <div class="fl">
+        </div>
+
+        <div class="fr">
+            <span id="tip"></span>
+        </div>
+    </div>
+    <div class="order-content-wrap">
+
+
+        <div id="show">
+            {if $rows neq 0}
+            {foreach $rows as $key=>$val}
+            <div class="order-content">
+                <div class="order-meal">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th colspan="3">
+                                <a href='#'  class="shop-name">{$val.shopName}</a>
+                                <p class="shop-info">
+                                    <span class="phone-icon"></span>商家电话：{$val.shopPhone}
+                                </p>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {foreach $val['items'] as $obj}
+                        <tr>
+                            <td>{$obj.name}</td>
+                            <td>{$obj.count}</td>
+                            <td class="text-right">￥{$obj.price}</td>
+                        </tr>
+                        {/foreach}
+
+                        </tbody>
+                    </table>
+                    <div class="order-price">
+                        总价：<span class="ft-red">￥{$val.price}</span>
+                    </div>
+                    <div class="order-delivery">
+                        <div class="receive-info">
+                            <span>订单编号：{$val.orderId}</span>
+                            <span>送餐地址：{$val.orderAddress}</span>
+                            <span>联系人：{$val.orderName}</span>
+                            <span>电话：{$val.orderPhone}</span>
+                            <span>送达时间：{$val.orderArrivedTime}</span>
+                            <span>备注信息：{$val.orderRemark}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-info">
+                    <div class="delivery-info">
+                        <div class="delivery-card ">
+                            <div class="card-header nick-selected">
+                                <div class="round">
+                                </div>
+                                <div class="line-through ">
+                                </div>
+                            </div>
+                            <div class="card-body ">
+                                <div class="status-msg">
+                                    订单提交成功
+                                </div>
+                                <div class="prompt"> 订单号：{$val.orderId}
+                                </div>
+                                <div class="time">
+                                    {getDate01($val.orderTime)}
+                                    <!--//计算15分钟是否支付-->
+                                    {if $val.paymethod neq 2 && $val.pay eq 0 && $val.received  eq 0}
+                                    {$nowTime=time()}
+                                    {$dis=$nowTime-$val.orderTime}
+                                    {if $dis>15*60}
+                                    {autocancel($val.username,$val.orderId)}
+                                    {$val.received=4}
+                                    {/if}
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="delivery-card ">
+                            <div class="card-header nick-selected">
+                                <div class="round">
+                                </div>
+                                {if $val.received neq 0}
+                                <div class=line-through></div>
+                                {/if}
+                            </div>
+                            <div class="card-body ">
+                                <div class="status-msg">
+
+                                    {if $val.paymethod eq 2}
+                                    已提交订单
+                                    {else}
+
+                                    {if $val.pay eq 0}
+                                    等待支付
+                                    {else}
+                                    已支付
+                                    {/if}
+
+                                    {/if}
+
+
+                                </div>
+                                <div class="prompt">
+                                    {if $val.paymethod eq 2}
+                                    等待商家接单(餐到付款)
+                                    {else}
+                                    {if $val.pay eq 0}
+                                    请在提交订单后15分钟内完成支付
+                                    {else}
+                                    已支付，订单进行中
+                                    {/if}
+                                    {/if}
+
+                                </div>
+                                <div class="time">
+                                    {if $val.pay eq 1}
+                                    {if $val.payTime}
+                                    {getDate01($val.payTime)}
+                                    {/if}
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                                {if $val.received eq 0}
+                                class='delivery-card n'
+                                {else}
+                                class='delivery-card'
+                                {/if}
+                        >
+                        <div class="card-header nick-selected">
+                            <div class="round">
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div class="status-msg">
+                                {if $val.received eq 1}
+                                商家已接单
+                                {elseif $val.received eq 2}
+                                商家拒绝接单
+                                {elseif $val.received eq 3}
+                                订单完成
+                                {elseif $val.received eq 4}
+                                订单取消
+                                {elseif $val.received eq 5}
+                                订单取消
+                                {/if}
+                            </div>
+                            <div class="prompt">
+                                {if $val.received eq 1}
+                                请您耐心等待
+                                {elseif $val.received eq 2}
+                                商家忙碌，无法接单
+                                {elseif $val.received eq 3}
+                                订单完成，欢迎下次再来
+                                {elseif $val.received eq 4}
+                                未支付，订单自动取消
+                                {elseif $val.received eq 5}
+                                用户取消订单
+                                {/if}
+
+                            </div>
+                            <div class="time">
+                                {if $val.received neq 0}
+                                {if $val.receivedTime}
+                                {getDate01($val.receivedTime)}
+                                {/if}
+                                {/if}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-operator " >
+                        <div class="operator-btns">
+                        {if $val.pay eq 1 && $val.received==0 || $val.paymethod eq 2 && $val.received eq 0}
+                            <a class=pay-btn onclick=takeOrder({$val.orderId})>接单</a><a class=pay-btn onclick=cancelOrder({$val.orderId})>拒绝</a>
+                        {/if}
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {/foreach}
+
+        <p align="center">
+            {$page}
+        </p>
+        <p align="center">
+            共{$count}条数据
+        </p>
+        {/if}
+    </div>
+
+</div>
+
+</div>
+</div>
+<!--提示框-->
+<div class="modal fade" id="mymodal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="btn-close" type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 id="alert-title" class="modal-title">标题</h4>
+            </div>
+            <div class="modal-body">
+                <p id="alert-body">内容</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-ok" type="button" class="btn btn-default" data-dismiss="modal">知道了</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="{JS}adminmer/jquery-1.8.3.js"></script>
+<script src="{JS}adminmer/bootstrap.min.js"></script>
+<script src="{JS}adminmer/common.js"></script>
+<script src="{JS}adminmer/jquery.jqprint-0.3.js"></script>
+<script>
+    $(document).ready(function () {
+
+        var hasNewOrder="";
+        if(hasNewOrder!=1){
+            startRequest();
+        }
+
+        //轮询器
+        setInterval("startRequest()",60000);
+    });
+
+//    function startRequest(){
+//        var requestUrl='checkOrder.php?shopId=<?php echo $shopId;?>';
+//
+//        $.ajax({ url:requestUrl,
+//            type:'post',
+//            async:true,
+//            timeout:3000,
+//            success:function(data){
+//                if(data=="success"){
+//                    window.location="moniterOrder.php?orderFlag=1";
+//                }
+//            },
+//            error:function(data){
+//            }
+//        });
+//    }
+
+    function takeOrder(id){
+
+        var postUrl="?m=adminmer&c=Orderc&a=order_moniter";
+        $.post(postUrl,
+            {literal}{type:"take", id:id}{/literal},
+            function(data,status,xhr) {
+                if(status=="success"){
+                    $res= $.parseJSON(data);
+                    if($res.code=="0"){
+//                        $(".order-delivery").jqprint();
+                        showAlert("提示","接单成功","?m=adminmer&c=Orderc&a=order_moniter");
+                    } else{
+                        showAlert("提示",$res.msg,"?m=adminmer&c=Orderc&a=order_moniter");
+                    }
+                }else{
+                    showAlert("提示","服务器异常");
+                }
+            });
+    }
+
+    function cancelOrder(id){
+
+        var postUrl="?m=adminmer&c=Orderc&a=order_moniter";
+        $.post(postUrl,
+            {literal}{type:"cancel", id:id}{/literal} ,
+            function(data,status,xhr) {
+                if(status=="success"){
+                    $res= $.parseJSON(data);
+                    if($res.code=="0"){
+                        showAlert("提示","已拒绝","?m=adminmer&c=Orderc&a=order_moniter");
+                    } else{
+                        showAlert("提示",$res.msg,"?m=adminmer&c=Orderc&a=order_moniter");
+                    }
+                }else{
+                    showAlert("提示","服务器异常");
+                }
+            });
+    }
+
+
+
+
+
+</script>
+</body>
+</html>

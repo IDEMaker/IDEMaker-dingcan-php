@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+
+    <link rel=stylesheet href="{CSS}admin/reset.css">
+    <link rel="stylesheet" href="{CSS}admin/bootstrap-admin.css">
+    <link href="{CSS}admin/global.css"  rel="stylesheet"  type="text/css"/>
+    <link href="{CSS}admin/backstage.css"  rel="stylesheet"  type="text/css"/>
+</head>
+<body>
+<form id="form1" action="{$form}" method="post">
+<span class="main-title">奇云付支付宝配置</span>
+<div id="main-tip"></div>
+<div class="form-add">
+
+        <table class="table  table-bordered table-hover">
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">商户ID</span></td>
+                <td><input type="text" width="100%" id="partner" name="partner" placeholder="应严格 商户ID 填写" value="{$data.partner}"/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">商户KEY</span></td>
+                <td><input type="text" width="100%" id="key" name="key" placeholder="应严格 商户key 填写"  value="{$data.key}"/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">异步通知</span></td>
+                <td><input type="text" width="100%" id="notify_url" name="notify_url" placeholder="Yournotify_url" value="{$data.notify_url}"/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">同步通知</span></td>
+                <td><input type="text" width="100%" id="return_url" name="return_url" placeholder="Yourreturn_url" value="{$data.return_url}"/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">站点名称</span></td>
+                <td><input type="text" width="100%" id="sitename" name="sitename" placeholder="Yoursitename" value="{$data.sitename}"/></td>
+            </tr>
+        </table>
+</div>
+    <input class="btn btn-primary" type="submit" value="保存"/>
+</form>
+<script type="text/javascript" src="{JS}admin/jquery-1.8.3.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#form1").submit(function () {
+            if(isValid()){
+                return true;
+            }else{
+                return false;
+            }
+        });
+    });
+    function isValid(){
+        if($("input[name='cName']").val().length<=0){
+            $("#main-tip").html('分类不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if($("input[name='weight']").val().length<=0){
+            $("#main-tip").html('权重不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if($("select option:selected").val()=="请选择商户")
+        {
+            $("#main-tip").html('商户不能为空');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        if(isNaN($("input[name='weight']").val())){
+            $("#main-tip").html('权重必须为数字');
+            $("#main-tip").css('display', 'inline-block');
+            return false;
+        }
+        $("#main-tip").hide();
+        return true;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel=stylesheet href="{CSS}adminmer/reset.css">
+    <link rel=stylesheet href="{CSS}adminmer/bootstrap-admin.css">
+    <link rel="stylesheet" href="{CSS}adminmer/backstage.css">
+    <link rel="stylesheet" href="{CSS}public/page.css">
+    <script src="{JS}public/jquery-1.8.3.min.js"></script>
+    <script>pageurl="?m=admin&c=Shopc&a=shopApply";</script>
+    <script src="{JS}public/page.js"></script>
+</head>
+<body>
+<span class="main-title">入驻申请</span>
+<div class="details_operation clearfix">
+
+    <div class="fl">
+    </div>
+
+    <div class="fr">
+        <div class="text">
+
+                <span>
+                                <input type="text" value="" placeholder="搜索关键字如:申请人" class="search form-control" name="search">
+                                </span>
+            <span>
+                    <input type="button" value="搜索" id="search" class="btn btn-primary">
+                </span>
+        </div>
+    </div>
+</div>
+
+<div id="show">
+<table  class="table  table-hover" cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+        <th width="10%">申请人</th>
+        <th width="10%">联系电话</th>
+        <th width="10%">申请状态</th>
+        <th width="10%">申请时间</th>
+        <th width="10%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {if $data neq 0}
+    {foreach $data as $key=>$val}
+    <tr align="center">
+        <td style="font-size: 20px;">{$val.username}</td>
+        <td style="font-size: 20px;">{$val.hotelPhone}</td>
+        {if $val.readStatus eq 0}
+        <td>待阅读</td>
+        {/if}
+        <td>{$val.time}</td>
+        <td align="center"><a class="btn btn-link" onclick="editt({$val.id})">审核</a><a class="btn btn-link"  onclick="look({$val.id})">查看</a></td>
+    </tr>
+    {/foreach}
+
+    </tbody>
+</table>
+    <p align="center">
+        {$page}
+    </p>
+    <p align="center">
+        共{$count}条数据
+    </p>
+    {/if}
+</div>
+<div class="modal fade" id="mymodal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="btn-close" type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 id="alert-title" class="modal-title">标题</h4>
+            </div>
+            <div class="modal-body">
+                <p id="alert-body">内容</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-ok" type="button" class="btn btn-default" data-dismiss="modal">知道了</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="{JS}admin/bootstrap.min.js"></script>
+<script src="{JS}admin/common.js"></script>
+<script src="{JS}admin/jquery.jqprint-0.3.js"></script>
+<script>
+    function editt(id)
+    {
+        var postUrl="?m=admin&c=Shopc&a=shopApply";
+        $.post(postUrl,
+            {literal}{id:id}{/literal},
+            function(data,status,xhr) {
+                if(status=="success"){
+                    $res= $.parseJSON(data);
+                     if($res.code==1)
+                     {
+                         showAlert("入驻申请","审核完毕,请刷新");
+                     }else if($res.code==0){
+                         showAlert("入驻申请","审核失败,请刷新");
+                     }
+
+                }else{
+                    showAlert("服务器异常");
+                }
+            });
+    }
+    function look(id)
+    {
+        window.location.href='?m=admin&c=Shopc&a=shopApply_look&id='+id;
+    }
+</script>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel=stylesheet href="{CSS}adminmer/reset.css">
+    <link rel=stylesheet href="{CSS}adminmer/bootstrap-admin.css">
+    <link rel="stylesheet" href="{CSS}adminmer/backstage.css">
+</head>
+<body>
+<span class="main-title">余额提现</span>
+<div class="form-add">
+    <form id="form1" action="{$form}" method="post">
+        <table class="table  table-bordered table-hover">
+            <tr>
+                <td align="right"><span class="td-txt">当前余额</span></td>
+                <td> <b><font color="red" style="font-size: 20px;"><input type="text"  disabled value="{$data.balance}"/></font></b></td>
+            </tr>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">提现余额</span></td>
+                <td><input type="text" width="100%" id="balance" name="balance" placeholder="请输入提现金额"/></td>
+            </tr>
+            <tr>
+                <td align="right" width="20%"><span class="td-txt">支付宝账户</span></td>
+                <td><input type="text" width="100%" id="withAccount" name="withAccount" placeholder="请输入提现账户"/></td>
+            </tr>
+        </table>
+        <input class="btn btn-primary" type="submit" value="提现"/>
+    </form>
+</div>
+</body>
+</html>
